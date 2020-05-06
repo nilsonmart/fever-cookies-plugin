@@ -1,0 +1,66 @@
+//CSS vars
+:root {
+	--default-value: 10px;
+	--normal: 400;
+	--bold: 700;
+	--blackRGB: 0, 0, 0;
+	--black: #000;
+	--white: #fff;
+	--green-400: #46cead;
+	--gray-100: #ededed;
+	--gray-300: #f9f9f9;
+	--gray-400: #dedede;
+	--gray-500: #bfbfbf;
+	--gray-700: #b4b4b4;
+	--font-cookiebar: 'Arial';
+	--font-cookiebar-icon: 'Trebuchet MS';
+	--font-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	--layer-on-top: 2147483647;
+	--layer-on-bottom: 2147483646;
+}
+
+//base font
+$base-font: 62.5%;
+
+//breakpoint vars
+$extra-small: 22.5em; //360px
+$small: 36em; //576px
+$medium: 48em; //768px
+$large: 64em; //1024px
+$extra-large: 75em; //1200px
+$wide: 90em; //1440px
+$extra-wide: 100em; //1600px
+
+//breakpoints
+$breakpoints: (
+	'extra-small': $extra-small,
+	'small': $small,
+	'medium': $medium,
+	'large': $large,
+	'extra-large': $extra-large,
+	'wide': $wide,
+	'extra-wide': $extra-wide
+);
+
+// Caching current breakpoint
+// Not meant to be manually edited
+$default-breakpoint: root;
+$current-breakpoint: $default-breakpoint;
+
+// Caching existing placeholders
+// Not meant to be manually edited
+$placeholders: ();
+
+//z-index
+$z-index: (
+	'pothole': -1,
+	'basement': 0,
+	'sidewalk': 1,
+	'bungalow': 40,
+	'bungalow-chimney': 50,
+	'house': 60,
+	'tower': 70,
+	'skyscrapper': 80,
+	'sky': 90,
+	'satellite': 100
+);

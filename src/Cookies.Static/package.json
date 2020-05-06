@@ -1,0 +1,43 @@
+{
+	"name": "feverit-pug-cookies-plugin",
+	"version": "1.4.3",
+	"description": "Project Cookies GDPR - Plugin Version",
+	"author": "FEVER",
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/FeverAgency/fever-cookies-plugin"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.9.6",
+		"@babel/preset-env": "^7.9.6",
+		"autoprefixer": "^9.7.6",
+		"browser-sync": "^2.26.7",
+		"del": "^5.1.0",
+		"fs": "0.0.1-security",
+		"gulp": "^4.0.2",
+		"gulp-babel": "^8.0.0",
+		"gulp-clean-css": "^4.3.0",
+		"gulp-concat": "^2.6.1",
+		"gulp-data": "^1.3.1",
+		"gulp-eslint": "^6.0.0",
+		"gulp-if": "^3.0.0",
+		"gulp-line-ending-corrector": "^1.0.3",
+		"gulp-merge-json": "^2.1.0",
+		"gulp-plumber": "^1.2.1",
+		"gulp-postcss": "^8.0.0",
+		"gulp-pug": "^4.0.1",
+		"gulp-rename": "^2.0.0",
+		"gulp-sass": "^4.1.0",
+		"gulp-sass-lint": "^1.4.0",
+		"gulp-sourcemaps": "^2.6.5",
+		"gulp-uglify": "3.0.2",
+		"path": "^0.12.7",
+		"postcss-css-variables": "^0.17.0",
+		"postcss-gap-properties": "^2.0.0"
+	},
+	"browserslist": [
+		"last 3 versions",
+		"not dead"
+	]
+}

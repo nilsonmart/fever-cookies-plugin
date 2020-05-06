@@ -1,0 +1,138 @@
+%flex-wrap {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+%flex-center {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+%flex-center-v {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+%flex-center-h {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+%flex-column {
+	display: flex;
+	flex-direction: column;
+}
+
+%flex-column-wrap {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+
+%flex-column-center {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+%flex-column-center-v {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	flex-direction: column;
+}
+
+%flex-column-center-h {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	flex-direction: column;
+}
+
+%flex-between {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+%flex-between-center {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+%flex-between-column {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+%flex-between-column-center {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
+}
+
+%flex-around {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+%flex-around-center {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+}
+
+%flex-around-column {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+%flex-around-column-center {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+}
+
+
+%position-center {
+	@include position(absolute, top 50% left 50%);
+	@include translate(-50%, -50%);
+}
+
+%position-center-v {
+	@include position(absolute, top 50%);
+	@include translate(0, -50%);
+}
+
+%position-center-h {
+	@include position(absolute, left 50%);
+	@include translate(-50%, 0);
+}
+
+
+%block-center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+%hide-element {
+	@include absolute(left -99999px);
+}
