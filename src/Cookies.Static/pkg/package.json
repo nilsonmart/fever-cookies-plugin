@@ -1,5 +1,5 @@
 {
-	"name": "fever-cookies-plugin",
+	"name": "@feveragency/fever-cookies-plugin",
 	"version": "1.4.3",
 	"description": "This plugin allows you to setup a fully customizable cookie bar, so the user can control which cookies want, following the best practices of GDPR compliance.",
 	"keywords": [
@@ -15,5 +15,8 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/FeverAgency/fever-cookies-plugin"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
 	}
 }
