@@ -20,8 +20,7 @@
 
 @mixin border-radius($key) {
 	border-radius: $key;
-	background-clip: padding-box;
-	/* stops bg color from leaking outside the border: */
+	background-clip: padding-box; /* stops bg color from leaking outside the border: */
 }
 
 @mixin position($position, $args) {

@@ -46,7 +46,7 @@ To fully initialize the cookie plugin, you must pass your values/events as param
 const myCookieBarWithOptions = new FeverCookieBar({
     layout: {
         color: {
-			overlay: false, //true or false --- block site from doing any action until user act on cookies
+            overlay: false, //true or false --- block site from doing any action until user act on cookies
             primary: '#f60',
             secondary: '#000'
         },

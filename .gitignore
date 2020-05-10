@@ -1,3 +1,2 @@
-/src/Cookies.Static/dist
-/src/Cookies.Static/node_modules
-/src/Cookies.Static/pkg/.npmrc
+/dist
+/node_modules
