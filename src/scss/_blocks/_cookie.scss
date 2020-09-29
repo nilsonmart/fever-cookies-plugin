@@ -8,20 +8,20 @@
 			content: '';
 			@include fixed(top 0 left 0);
 			@include size(100vw, 100vh);
-			background-color: rgba(var(--blackRGB), .75);
-			z-index: var(--layer-on-bottom);
+			background-color: rgba(var(--fvr-cookies-blackRGB), .75);
+			z-index: var(--fvr-cookies-layer-on-bottom);
 		}
 	}
 
 	//cookie bar
 	&__bar {
 		box-sizing: border-box;
-		font-size: calc(var(--default-value) * 1.2);
-		font-family: var(--font-default);
+		font-size: calc(var(--fvr-cookies-default-value) * 1.2);
+		font-family: var(--fvr-cookies-font-default);
 		@include fixed(left 0);
 		width: 100%;
 		line-height: line-height(16, 12);
-		z-index: var(--layer-on-top);
+		z-index: var(--fvr-cookies-layer-on-top);
 
 		*,
 		*::before,
@@ -34,12 +34,12 @@
 			text-decoration: none;
 			font-size: inherit;
 			color: inherit;
-			font-weight: var(--bold)
+			font-weight: var(--fvr-cookies-bold)
 		}
 
 		&-text {
 			flex-basis: 100%;
-			margin-bottom: var(--default-value);
+			margin-bottom: var(--fvr-cookies-default-value);
 
 			@include bp('extra-large') {
 				flex-basis: 38%;
@@ -57,24 +57,24 @@
 		}
 
 		&-link {
-			margin-left: calc(var(--default-value)/2);
+			margin-left: calc(var(--fvr-cookies-default-value)/2);
 		}
 
-		&.text {
+		&-text {
 			&--white {
-				color: var(--white);
+				color: var(--fvr-cookies-white);
 			}
 
 			&--black {
-				color: var(--black);
+				color: var(--fvr-cookies-black);
 			}
 		}
 
-		&.bottom {
+		&--bottom {
 			bottom: 0
 		}
 
-		&.top {
+		&--top {
 			top: 0
 		}
 
@@ -83,13 +83,13 @@
 			text-transform: uppercase;
 			border-width: 2px;
 			border-style: solid;
-			padding: var(--default-value) calc(var(--default-value)*3.5);
+			padding: var(--fvr-cookies-default-value) calc(var(--fvr-cookies-default-value)*3.5);
 			flex-basis: 100%;
 			text-align: center;
 			margin-left: 0;
 
 			@include bp('medium') {
-				margin-left: calc(var(--default-value)*1.5);
+				margin-left: calc(var(--fvr-cookies-default-value)*1.5);
 				flex-basis: auto
 			}
 
@@ -118,7 +118,7 @@
 
 				&--allow,
 				&--reject {
-					margin-bottom: var(--default-value);
+					margin-bottom: var(--fvr-cookies-default-value);
 
 					@include bp('medium') {
 						margin-bottom: 0;
@@ -131,7 +131,7 @@
 	&__container {
 		@extend %flex-center-v;
 		margin: 0;
-		padding: calc(var(--default-value) * 1.5) calc(var(--default-value) * 2.5)
+		padding: calc(var(--fvr-cookies-default-value) * 1.5) calc(var(--fvr-cookies-default-value) * 2.5)
 	}
 
 	//cookie mmodal
@@ -149,9 +149,9 @@
 			@extend %flex-center;
 			@include fixed(top 0 left 0);
 			@include size(100vw, 100vh);
-			background-color: rgba(var(--blackRGB), .75);
-			z-index: var(--layer-on-top);
-			font-family: var(--font-default);
+			background-color: rgba(var(--fvr-cookies-blackRGB), .75);
+			z-index: var(--fvr-cookies-layer-on-top);
+			font-family: var(--fvr-cookies-font-default);
 			overflow: auto;
 		}
 
@@ -161,7 +161,7 @@
 			@include size(100%, auto);
 			max-width: 90%;
 			max-height: 80%;
-			background-color: var(--white);
+			background-color: var(--fvr-cookies-white);
 			overflow: hidden;
 			margin: 0 auto;
 
@@ -191,7 +191,7 @@
 
 				@include bp('medium') {
 					content: '';
-					background-color: var(--white);
+					background-color: var(--fvr-cookies-white);
 					@include size(1px, 55px);
 					@include _('position-center-v');
 					right: 0;
@@ -201,7 +201,7 @@
 
 		&-image {
 			@include size(100%, auto);
-			padding: 0 calc(var(--default-value) * 1.5);
+			padding: 0 calc(var(--fvr-cookies-default-value) * 1.5);
 		}
 
 		&-title {
@@ -210,16 +210,16 @@
 			@include bp('medium') {
 				display: block;
 				text-transform: uppercase;
-				color: var(--white);
-				padding-left: calc(var(--default-value) * 4);
-				font-size: calc(var(--default-value) * 2);
+				color: var(--fvr-cookies-white);
+				padding-left: calc(var(--fvr-cookies-default-value) * 4);
+				font-size: calc(var(--fvr-cookies-default-value) * 2);
 			}
 
 			.fever-cookie__modal-tabs-content & {
 				display: block;
-				color: var(--black);
-				font-size: calc(var(--default-value) * 1.3);
-				margin-bottom: var(--default-value);
+				color: var(--fvr-cookies-black);
+				font-size: calc(var(--fvr-cookies-default-value) * 1.3);
+				margin-bottom: var(--fvr-cookies-default-value);
 				text-transform: uppercase;
 				padding-left: 0;
 
@@ -233,13 +233,13 @@
 			display: flex;
 			flex-grow: 1;
 			width: 100%; // fix Chrome Safari
-			background: var(--white)
+			background: var(--fvr-cookies-white)
 		}
 
 		&-tabs {
 			flex-grow: 1;
 			@extend %flex-wrap;
-			font-family: var(--font-cookiebar);
+			font-family: var(--fvr-cookies-font);
 
 			&-content {
 				display: none;
@@ -247,22 +247,22 @@
 
 				&.cookie-current {
 					@extend %flex-column;
-					padding: calc(var(--default-value) * 2);
+					padding: calc(var(--fvr-cookies-default-value) * 2);
 					max-height: 220px;
-					color: var(--black);
+					color: var(--fvr-cookies-black);
 
 					@include bp('medium') {
 						flex: 1;
-						padding: calc(var(--default-value) * 2) calc(var(--default-value) * 4);
+						padding: calc(var(--fvr-cookies-default-value) * 2) calc(var(--fvr-cookies-default-value) * 4);
 						max-height: 330px;
 					}
 				}
 
 				.cookie__modal-title {
-					color: var(--black);
+					color: var(--fvr-cookies-black);
 					padding: 0;
-					margin-bottom: var(--default-value);
-					font-size: calc(var(--default-value) * 1.6);
+					margin-bottom: var(--fvr-cookies-default-value);
+					font-size: calc(var(--fvr-cookies-default-value) * 1.6);
 					display: block;
 					text-transform: uppercase;
 
@@ -272,17 +272,17 @@
 				}
 
 				&-title {
-					font-size: calc(var(--default-value) * 1.3);
-					font-weight: var(--bold);
+					font-size: calc(var(--fvr-cookies-default-value) * 1.3);
+					font-weight: var(--fvr-cookies-bold);
 					text-transform: uppercase;
-					margin-bottom: calc(var(--default-value) * 2.5);
+					margin-bottom: calc(var(--fvr-cookies-default-value) * 2.5);
 					@extend %flex-center-v;
 					min-height: 25px;
 				}
 
 				&-text {
-					font-weight: var(--normal);
-					font-size: calc(var(--default-value) * 1.2);
+					font-weight: var(--fvr-cookies-regular);
+					font-size: calc(var(--fvr-cookies-default-value) * 1.2);
 					line-height: line-height(16, 12);
 					max-height: 90%;
 					overflow-y: auto;
@@ -301,8 +301,8 @@
 			margin: 0;
 			padding: 0;
 			list-style: none;
-			background: var(--gray-300);
-			font-size: calc(var(--default-value) *1.2);
+			background: var(--fvr-cookies-gray-300);
+			font-size: calc(var(--fvr-cookies-default-value) *1.2);
 			flex-basis: 100%;
 			max-height: 180px;
 			overflow-y: auto;
@@ -316,16 +316,16 @@
 
 		&-tabs-item {
 			text-transform: capitalize;
-			padding: var(--default-value);
-			border-bottom: 1px solid var(--gray-700);
-			color: var(--gray-500);
-			background-color: var(--gray-100);
+			padding: var(--fvr-cookies-default-value);
+			border-bottom: 1px solid var(--fvr-cookies-gray-700);
+			color: var(--fvr-cookies-gray-500);
+			background-color: var(--fvr-cookies-gray-100);
 			flex-basis: 100%;
 			@extend %flex-center-v;
-			padding-left: calc(var(--default-value) * 2);
+			padding-left: calc(var(--fvr-cookies-default-value) * 2);
 
 			@include bp('medium') {
-				padding: calc(var(--default-value) * 2.5) var(--default-value) calc(var(--default-value) * 2.5) calc(var(--default-value) * 2.5);
+				padding: calc(var(--fvr-cookies-default-value) * 2.5) var(--fvr-cookies-default-value) calc(var(--fvr-cookies-default-value) * 2.5) calc(var(--fvr-cookies-default-value) * 2.5);
 				flex-basis: auto;
 			}
 
@@ -340,8 +340,8 @@
 			}
 
 			&.cookie-current {
-				color: var(--black);
-				background-color: var(--gray-400);
+				color: var(--fvr-cookies-black);
+				background-color: var(--fvr-cookies-gray-400);
 				@include relative;
 
 				&::after {
@@ -353,7 +353,7 @@
 						height: 0;
 						border-bottom: 7px solid transparent;
 						border-top: 7px solid transparent;
-						border-left: 7px solid var(--gray-400);
+						border-left: 7px solid var(--fvr-cookies-gray-400);
 						font-size: 0;
 						line-height: 0;
 						right: -7px;
@@ -370,15 +370,15 @@
 		&-label {
 			display: block;
 			margin-left: auto;
-			color: var(--gray-500);
+			color: var(--fvr-cookies-gray-500);
 
 			&[for] {
 				@include size(40px, 24px);
 				@include border-radius(40px);
-				background: var(--gray-400);
+				background: var(--fvr-cookies-gray-400);
 				@include relative;
 				cursor: pointer;
-				box-shadow: inset 1px 1px 5px 0 rgba(var(--blackRGB), .2);
+				box-shadow: inset 1px 1px 5px 0 rgba(var(--fvr-cookies-blackRGB), .2);
 
 				&:active {
 					&::after {
@@ -390,10 +390,10 @@
 					content: '';
 					@include absolute(top 5px left 5px);
 					@include size(15px);
-					background-color: var(--white);
+					background-color: var(--fvr-cookies-white);
 					@include border-radius(50%);
 					transition: .3s;
-					box-shadow: 2px 2px 5px 0 rgba(var(--blackRGB), .3);
+					box-shadow: 2px 2px 5px 0 rgba(var(--fvr-cookies-blackRGB), .3);
 				}
 
 				span {
@@ -408,7 +408,7 @@
 
 			&:checked {
 				+label {
-					background: var(--green-400);
+					background: var(--fvr-cookies-green-400);
 
 					&::after {
 						left: calc(100% - 5px);
@@ -419,19 +419,19 @@
 		}
 
 		&-list {
-			margin-top: calc(var(--default-value) * 2);
-			font-weight: var(--bold);
+			margin-top: calc(var(--fvr-cookies-default-value) * 2);
+			font-weight: var(--fvr-cookies-bold);
 
 			span {
-				font-size: calc(var(--default-value) * 1.4);
+				font-size: calc(var(--fvr-cookies-default-value) * 1.4);
 				text-transform: uppercase;
 				display: block;
-				margin-bottom: calc(var(--default-value));
+				margin-bottom: calc(var(--fvr-cookies-default-value));
 			}
 
 			li {
 				list-style-type: disc;
-				margin-left: calc(var(--default-value));
+				margin-left: calc(var(--fvr-cookies-default-value));
 			}
 		}
 
@@ -439,36 +439,36 @@
 			@include size(100%, 60px);
 			@extend %flex-center-v;
 			justify-content: flex-end;
-			padding: 0 calc(var(--default-value) * 2);
+			padding: 0 calc(var(--fvr-cookies-default-value) * 2);
 		}
 
 		&-button {
 			text-transform: uppercase;
-			background: var(--white);
-			font-size: calc(var(--default-value));
-			font-weight: var(--bold);
-			padding: calc(var(--default-value) / 2) calc(var(--default-value) * 1.5);
+			background: var(--fvr-cookies-white);
+			font-size: calc(var(--fvr-cookies-default-value));
+			font-weight: var(--fvr-cookies-bold);
+			padding: calc(var(--fvr-cookies-default-value) / 2) calc(var(--fvr-cookies-default-value) * 1.5);
 			cursor: pointer;
 			line-height: line-height(15, 10);
 			text-decoration: none;
-			border: 2px solid var(--white);
+			border: 2px solid var(--fvr-cookies-white);
 
 			&:first-of-type {
 				margin-right: 10px;
 				background: transparent;
-				color: var(--white);
+				color: var(--fvr-cookies-white);
 			}
 
 			&-close {
 				padding: 0;
 				border: 0;
 				background-clip: padding-box;
-				background-color: var(--white);
+				background-color: var(--fvr-cookies-white);
 				line-height: 1;
 				@include size(20px);
 				@extend %flex-center;
 				text-decoration: none;
-				font-family: var(--font-cookiebar-icon);
+				font-family: var(--fvr-cookies-font-icon);
 			}
 		}
 	}

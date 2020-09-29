@@ -18,7 +18,8 @@
 	/* eslint-enable no-undef */
 	'use strict'
 
-	//NOTE: using Array.prototype.slice.call in forEach when dealing with NodeLists to fix IE not supporting nodeList
+	//Check if browser has Nodelist foreach, if not set Array to Nodelist 
+	if (window.NodeList && !NodeList.prototype.forEach) NodeList.prototype.forEach = Array.prototype.forEach	
 
 	const defaults = {
 		layout: {
@@ -195,12 +196,12 @@
 		const colorPrimary = target.options.layout.color.primary.match(vars.hexaColor),
 			colorSecondary = target.options.layout.color.secondary.match(vars.hexaColor)
 
-		target.options.layout.bar.position === 'top' ? el.classList.add('top') : el.classList.add('bottom')
-		target.options.layout.bar.textColor === 'white' ? el.classList.add('text--white') : el.classList.add('text--black')
+		target.options.layout.bar.position === 'top' ? el.classList.add('fever-cookie__bar--top') : el.classList.add('fever-cookie__bar--bottom')
+		target.options.layout.bar.textColor === 'white' ? el.classList.add('fever-cookie__bar-text--white') : el.classList.add('fvr-cookie__bar-text--black')
 		el.style.backgroundColor = `#${colorSecondary}`
 
-		Array.prototype.slice.call(document.querySelectorAll('.fever-button:not(.fever-button--settings)')).forEach(selector => selector.style.backgroundColor = `#${colorPrimary}`)
-		Array.prototype.slice.call(document.querySelectorAll('.fever-button')).forEach(selector => {
+		document.querySelectorAll('.fever-button:not(.fever-button--settings)').forEach(selector => selector.style.backgroundColor = `#${colorPrimary}`)
+		document.querySelectorAll('.fever-button').forEach(selector => {
 			selector.style.borderRadius = `${target.options.layout.borderRadius}px`
 			selector.style.borderColor = `#${colorPrimary}`
 		})
@@ -336,7 +337,7 @@
 		document.querySelector('.fever-cookie__modal .js-cookies-accept-all').style.color = `#${colorPrimary}`
 		window.addEventListener('load', () => document.body.classList.contains('fever-cookie__overlay') ? document.querySelector('.fever-cookie__modal').style.backgroundColor = 'transparent' : '')
 
-		Array.prototype.slice.call(document.querySelectorAll('.fever-button-modal')).forEach(selector => selector.style.borderRadius = `${target.options.layout.borderRadius}px`)
+		document.querySelectorAll('.fever-button-modal').forEach(selector => selector.style.borderRadius = `${target.options.layout.borderRadius}px`)
 	}
 
 	/**
@@ -347,8 +348,8 @@
 	const cookieModalOpen = () => {
 		document.querySelector('.fever-cookie__modal').classList.add('active')
 		element.body.style.overflow = 'hidden'
-		Array.prototype.slice.call(document.querySelectorAll('.fever-cookie__modal-tabs-item,.fever-cookie__modal-tabs-content')).forEach(selector => selector.classList.remove('cookie-current'))
-		Array.prototype.slice.call(document.querySelectorAll('.fever-cookie__modal-tabs-item')).forEach((selector, idx) => idx === 0 ? selector.classList.add('cookie-current') : '')
+		document.querySelectorAll('.fever-cookie__modal-tabs-item,.fever-cookie__modal-tabs-content').forEach(selector => selector.classList.remove('cookie-current'))
+		document.querySelectorAll('.fever-cookie__modal-tabs-item').forEach((selector, idx) => idx === 0 ? selector.classList.add('cookie-current') : '')
 		document.querySelector('.fever-cookie__modal-tabs-content').classList.add('cookie-current')
 	}
 
@@ -369,26 +370,11 @@
 
 	const cookieModalTabs = () => {
 
-		Array.prototype.slice.call(document.querySelectorAll('.fever-cookie__modal-tabs-item')).forEach(() => {
+		document.querySelectorAll('.fever-cookie__modal-tabs-item').forEach(() => {
 			document.addEventListener('click', e => {
-				//FIX IE - polyfill includes
-				if (!String.prototype.includes) {
-					String.prototype.includes = function (search, start) {
-						'use strict'
-
-						if (search instanceof RegExp) {
-							throw TypeError('first argument must not be a RegExp')
-						}
-						if (start === undefined) {
-							start = 0
-						}
-						return this.indexOf(search, start) !== -1
-					}
-				}
-
-				if (e.target && e.target.className.includes('js-cookies-tab-item')) {
+				if (e.target && e.target.classList.contains('js-cookies-tab-item')) {
 					const dataTab = e.target.dataset.tab
-					Array.prototype.slice.call(document.querySelectorAll('.fever-cookie__modal-tabs-item,.fever-cookie__modal-tabs-content')).forEach(selector => selector.classList.remove('cookie-current'))
+					document.querySelectorAll('.fever-cookie__modal-tabs-item,.fever-cookie__modal-tabs-content').forEach(selector => selector.classList.remove('cookie-current'))
 					e.target.classList.add('cookie-current')
 					document.querySelector(`[data-cookies-tab-id=${dataTab}]`).classList.add('cookie-current')
 				}
@@ -443,7 +429,7 @@
 		document.querySelector('.js-cookies-settings').addEventListener('click', () => cookieModalOpen())
 
 		//buttons Misc -- remove cookiebar
-		Array.prototype.slice.call(document.querySelectorAll('.js-cookies-reject, .js-cookies-accept-all, .js-cookies-save')).forEach(selector =>
+		document.querySelectorAll('.js-cookies-reject, .js-cookies-accept-all, .js-cookies-save').forEach(selector =>
 			selector.addEventListener('click', () => {
 				cookieBarRemove()
 				document.body.classList.contains('fever-cookie__overlay') ? document.body.classList.remove('fever-cookie__overlay') : ''
@@ -452,10 +438,10 @@
 		)
 
 		//button modal -- close modal
-		Array.prototype.slice.call(document.querySelectorAll('.fever-button-modal')).forEach(selector => selector.addEventListener('click', () => cookieModalClose()))
+		document.querySelectorAll('.fever-button-modal').forEach(selector => selector.addEventListener('click', () => cookieModalClose()))
 
 		//button toggle enable disable
-		Array.prototype.slice.call(document.querySelectorAll('.js-cookies-checkbox')).forEach(selector => selector.addEventListener('change', () => selector.nextElementSibling.children[0].textContent = selector.checked ? target.options.modal.optional.labels.enabled : target.options.modal.optional.labels.disabled))
+		document.querySelectorAll('.js-cookies-checkbox').forEach(selector => selector.addEventListener('change', () => selector.nextElementSibling.children[0].textContent = selector.checked ? target.options.modal.optional.labels.enabled : target.options.modal.optional.labels.disabled))
 	}
 
 	/*  ========================================================================
@@ -580,7 +566,7 @@
 	*/
 
 	const cookieCheckAllOptional = target => {
-		Array.prototype.slice.call(document.querySelectorAll('.js-tab-optional')).forEach(tab => {
+		document.querySelectorAll('.js-tab-optional').forEach(tab => {
 			const input = tab.querySelector('input')
 			if (!input.checked) {
 				tab.querySelector('.js-cookies-label').click()
@@ -596,7 +582,7 @@
 	*/
 
 	const cookieUncheckAllOptional = target => {
-		Array.prototype.slice.call(document.querySelectorAll('.js-tab-optional')).forEach(tab => {
+		document.querySelectorAll('.js-tab-optional').forEach(tab => {
 			const input = tab.querySelector('input')
 			if (input.checked) {
 				tab.querySelector('.js-cookies-label').click()
@@ -621,7 +607,7 @@
 		}
 
 		//button accept all
-		Array.prototype.slice.call(document.querySelectorAll('.js-cookies-accept-all')).forEach(btn => {
+		document.querySelectorAll('.js-cookies-accept-all').forEach(btn => {
 			btn.addEventListener('click', () => {
 				createCookie('fevercookie-optional-state', 'accept-all', 365)
 				cookieEnabledAllEventsInjection(target)
@@ -636,7 +622,7 @@
 
 			const optionalTabs = document.querySelectorAll('.js-tab-optional')
 
-			Array.prototype.slice.call(optionalTabs).forEach(tab => {
+			optionalTabs.forEach(tab => {
 				itemsProcessed++
 				if (tab.querySelector('input:checked')) {
 					cookieEnabledSelectedEventsInjection(target, tab.dataset.cookiesTabId)
@@ -672,13 +658,13 @@
 			//trigger events on load that had been selected
 			const optionalTabs = document.querySelectorAll('.js-tab-optional')
 
-			Array.prototype.slice.call(optionalTabs).forEach(tab => {
+			optionalTabs.forEach(tab => {
 				if (tab.querySelector('input:checked'))
 					cookieEnabledSelectedEventsInjection(target, tab.dataset.cookiesTabId)
 			})
 
 			//button toggle enable disable on load
-			Array.prototype.slice.call(document.querySelectorAll('.js-cookies-checkbox')).forEach(selector => selector.nextElementSibling.children[0].textContent = selector.checked ? target.options.modal.optional.labels.enabled : target.options.modal.optional.labels.disabled)
+			document.querySelectorAll('.js-cookies-checkbox').forEach(selector => selector.nextElementSibling.children[0].textContent = selector.checked ? target.options.modal.optional.labels.enabled : target.options.modal.optional.labels.disabled)
 
 			//remove overlay if user accepted or rejected cookies
 			document.body.classList.remove('fever-cookie__overlay')
