@@ -98,7 +98,7 @@ const myCookieBarWithOptions = new FeverCookieBar({
                 title: 'analytics cookies',
                 text: 'These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.',
                 events: {
-                    on: function () {
+                    on() {
 
                         (function (i, s, o, g, r, a, m) {
                             i['GoogleAnalyticsObject'] = r;
@@ -116,7 +116,7 @@ const myCookieBarWithOptions = new FeverCookieBar({
                         ga('set', 'forceSSL', true);
                         ga('send', 'pageview');
                     },
-                    off: function () {
+                    off() {
                         myFeverCookieBarWithOptions.expireCookie('_ga');
                         myFeverCookieBarWithOptions.expireCookie('_gid');
                         myFeverCookieBarWithOptions.expireCookie('_gat');
@@ -128,10 +128,10 @@ const myCookieBarWithOptions = new FeverCookieBar({
                 title: 'functional cookies',
                 text: 'These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.',
                 events: {
-                    on: function () {
+                    on() {
                         console.log('functional on');
                     },
-                    off: function () {
+                    off() {
                         console.log('functional off');
                     }
                 }
@@ -141,10 +141,10 @@ const myCookieBarWithOptions = new FeverCookieBar({
                 title: 'targetting cookies',
                 text: 'These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.',
                 events: {
-                    on: function () {
+                    on() {
                         console.log('targetting on');
                     },
-                    off: function () {
+                    off() {
                         console.log('targetting off');
                     }
                 }
@@ -165,10 +165,10 @@ To achieve that, in each tab object, as in the example above, you must add a par
     title: 'targetting cookies',
     text: 'These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.',
     events: {
-        on: function () {
+        on() {
             console.log('targetting on');
         },
-        off: function () {
+        off() {
             console.log('targetting off');
         }
     }
