@@ -1,6 +1,6 @@
 {
 	"name": "@feveragency/fever-cookies-plugin",
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"description": "This plugin allows you to setup a fully customizable cookie bar, so the user can control which cookies want, following the best practices of GDPR compliance.",
 	"author": "FEVER",
 	"homepage": "fever.pt",
