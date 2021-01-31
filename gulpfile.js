@@ -11,6 +11,8 @@ const { src, dest, series , watch } = require('gulp'),
 	esLint = require('gulp-eslint'),
 	uglify = require('gulp-uglify'),
 	gulpif = require('gulp-if'),
+	header = require('gulp-header'),
+	pkg = require('./pkg/package.json'),
 	// Sass
 	sass = require('gulp-sass'),
 	cleanCSS = require('gulp-clean-css'),
@@ -20,7 +22,16 @@ const { src, dest, series , watch } = require('gulp'),
 	gap = require('postcss-gap-properties'),
 	sassLint = require('gulp-sass-lint'),
 	//Assets path
-	assetsPath = '../Cookies.Static/pkg/dist/'
+	assetsPath = 'pkg/dist/',
+	banner = ['/**',
+	' * <%= pkg.name %> - <%= pkg.description %>',
+	' * @version v<%= pkg.version %>',
+	' * @author <%= pkg.author %>',
+	' * @link <%= pkg.homepage %>',
+	' * @license <%= pkg.license %>',
+	' */',
+	''].join('\n');
+
 
 //--------- Define Paths
 const paths = {
@@ -102,6 +113,7 @@ function coreScripts(source, dist) {
 			eolc: 'CRLF'
 		}))
 		.pipe(gulpif(!isDev, uglify()))
+		.pipe(header(banner, { pkg : pkg } ))
 		.pipe(gulpif(!isDev, dest(dist)))
 		.pipe(gulpif(isDev, sourcemaps.write('.')))
 		.pipe(gulpif(isDev, dest(dist)))
@@ -134,6 +146,7 @@ function coreStyles(basename, source, dist, prod) {
 		.pipe(lec({
 			eolc: 'CRLF'
 		}))
+		.pipe(header(banner, { pkg : pkg } ))		
 		.pipe(dest(prod))
 		.pipe(sourcemaps.write('.'))
 		.pipe(dest(dist))
