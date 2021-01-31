@@ -24,8 +24,8 @@ npm install fever-cookies-plugin
 The package contains two files inside dist folder which you need to include in your project.
 
 ```js
-dist\css\cookie.min.css
-dist\js\cookie.min.js
+dist/css/cookie.min.css
+dist/js/cookie.min.js
 ```
 
 ### 3. Initialization with default values
@@ -99,27 +99,58 @@ const myCookieBarWithOptions = new FeverCookieBar({
                 text: 'These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.',
                 events: {
                     on() {
+                        console.log('analytics on')
+                    },
 
+                    off() {
+                        console.log('analytics off')
+                        myFeverCookieBarWithOptions.expireCookie('_ga')
+                        myFeverCookieBarWithOptions.expireCookie('_gid')
+                        myFeverCookieBarWithOptions.expireCookie('_gat')
+                    },
+
+                    pageLoadOn() {
                         (function (i, s, o, g, r, a, m) {
-                            i['GoogleAnalyticsObject'] = r;
+                            i['GoogleAnalyticsObject'] = r
                             i[r] = i[r] || function () {
                                 (i[r].q = i[r].q || []).push(arguments)
-                            }, i[r].l = 1 * new Date();
-                            a = s.createElement(o),
+                            }, i[r].l = 1 * new Date()
+                            a = s.createElement(o)
                             m = s.getElementsByTagName(o)[0]
-                            a.async = 1;
-                            a.src = g;
+                            a.async = 1
+                            a.src = g
                             m.parentNode.insertBefore(a, m)
                         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga')
-                        ga('create', 'UA-12345', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('set', 'forceSSL', true);
-                        ga('send', 'pageview');
+                         
+                         //clientId generated using cyrb53
+                        ga('create', 'UA-12345', {'clientId': clientIDHashed})
+                        ga('set', 'anonymizeIp', true)
+                        ga('set', 'forceSSL', true)
+                        ga('send', 'pageview')
+
+                        console.log('analytics pageLoadOn')
                     },
-                    off() {
-                        myFeverCookieBarWithOptions.expireCookie('_ga');
-                        myFeverCookieBarWithOptions.expireCookie('_gid');
-                        myFeverCookieBarWithOptions.expireCookie('_gat');
+
+                    pageLoadOff() {
+                        (function (i, s, o, g, r, a, m) {
+                            i['GoogleAnalyticsObject'] = r
+                            i[r] = i[r] || function () {
+                                (i[r].q = i[r].q || []).push(arguments)
+                            }, i[r].l = 1 * new Date()
+                            a = s.createElement(o)
+                            m = s.getElementsByTagName(o)[0]
+                            a.async = 1
+                            a.src = g
+                            m.parentNode.insertBefore(a, m)
+                        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga')
+
+                        //clientId generated using cyrb53
+                        ga('create', 'UA-12345', {'storage': 'none',  'clientId': clientIDHashed})
+                        ga('set', 'anonymizeIp', true)
+                        ga('set', 'forceSSL', true)
+                        ga('send', 'pageview')
+                        
+                        console.log('analytics pageLoadOff')
                     }
                 }
             },
@@ -129,10 +160,19 @@ const myCookieBarWithOptions = new FeverCookieBar({
                 text: 'These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.',
                 events: {
                     on() {
-                        console.log('functional on');
+                        console.log('functional on')
                     },
+
                     off() {
-                        console.log('functional off');
+                        console.log('functional off')
+                    },
+
+                    pageLoadOn() {
+                        console.log('functional pageLoadOn')
+                    },
+
+                    pageLoadOff() {
+                        console.log('functional pageLoadOff')
                     }
                 }
             },
@@ -142,10 +182,19 @@ const myCookieBarWithOptions = new FeverCookieBar({
                 text: 'These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.',
                 events: {
                     on() {
-                        console.log('targetting on');
+                        console.log('targetting on')
                     },
+
                     off() {
-                        console.log('targetting off');
+                        console.log('targetting off')
+                    },
+                    
+                    pageLoadOn() {
+                        console.log('targetting pageLoadOn')
+                    },
+                    
+                    pageLoadOff() {
+                        console.log('targetting pageLoadOff')
                     }
                 }
             }]
@@ -157,7 +206,7 @@ const myCookieBarWithOptions = new FeverCookieBar({
 ### 4. Events
 
 Each tab you add to optional tabs, can be configured to react when the user enable/disable it.
-To achieve that, in each tab object, as in the example above, you must add a parameter called `events`, with two child events, `on` & `off`, they will be invoked when the user push save/acceptsall/rejectsall buttons, and match the checked/uncheck state of the respective tab.
+To achieve that, in each tab object, as in the example above, you must add a parameter called `events`, with four child events, `on`, `off`, `pageLoadOn()` & `pageLoadOff()` they will be invoked when the user push save/acceptsall/rejectsall buttons, and match the checked/uncheck state of the respective tab.
 
 ```js
 {
@@ -166,11 +215,20 @@ To achieve that, in each tab object, as in the example above, you must add a par
     text: 'These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.',
     events: {
         on() {
-            console.log('targetting on');
+            console.log('run if user accept cookies');
         },
+
         off() {
-            console.log('targetting off');
-        }
+            console.log('run if user reject cookies');
+        },
+
+        pageLoadOn() {
+            console.log('always run if previously accepted cookies')
+        },
+        
+        pageLoadOff() {
+            console.log('alaways run if previously rejected cookies or yet not acceped by the user')
+        }   
     }
 }
 ```

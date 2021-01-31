@@ -1,17 +1,17 @@
 //--------- Include references
-const {src, dest, series, parallel, watch} = require('gulp'),
+const { src, dest, series , watch } = require('gulp'),
 	concat = require('gulp-concat'),
 	browserSync = require('browser-sync'),
-	rename = require('gulp-rename'),
 	sourcemaps = require('gulp-sourcemaps'),
 	del = require('del'),
 	babel = require('gulp-babel'),
-	plumber = require('gulp-plumber'),
+	plumber = require('gulp-plumber'), //does not crash if error occurs
 	pug = require('gulp-pug'),
 	lec = require('gulp-line-ending-corrector'),
 	esLint = require('gulp-eslint'),
 	uglify = require('gulp-uglify'),
 	gulpif = require('gulp-if'),
+	// Sass
 	sass = require('gulp-sass'),
 	cleanCSS = require('gulp-clean-css'),
 	postCSS = require('gulp-postcss'),
@@ -19,7 +19,8 @@ const {src, dest, series, parallel, watch} = require('gulp'),
 	cssVars = require('postcss-css-variables'),
 	gap = require('postcss-gap-properties'),
 	sassLint = require('gulp-sass-lint'),
-	packageDist = 'pkg/dist/'
+	//Assets path
+	assetsPath = '../Cookies.Static/pkg/dist/'
 
 //--------- Define Paths
 const paths = {
@@ -32,7 +33,7 @@ const paths = {
 		},
 		dist: {
 			app: 'dist/assets/js/app/',
-			appProd: `${packageDist}js/`
+			appProd: `${assetsPath}js/`
 		}
 	},
 	views: {
@@ -50,7 +51,7 @@ const paths = {
 
 		dist: {
 			dest: 'dist/assets/css/',
-			destProd: `${packageDist}css/`,
+			destProd: `${assetsPath}css/`,
 		}
 	},
 	assets: {
@@ -60,15 +61,16 @@ const paths = {
 
 //--------- Clean files
 function clean(done) {
-	del.sync([`${paths.views.app.dest}*`, `${packageDist}*`], {
+	del.sync([`${paths.views.app.dest}*`, `${assetsPath}*`], {
 		force: true
 	})
 	done()
 }
 
 //--------- Views : Pug
-function viewsPug(done) {
-	src(paths.views.app.src)
+function viewsPug() {
+	// templates
+	return src(paths.views.app.src)
 		.pipe(plumber())
 		.pipe(pug({
 			pretty: true,
@@ -78,15 +80,14 @@ function viewsPug(done) {
 			eolc: 'CRLF'
 		}))
 		.pipe(dest(paths.views.app.dest))
-	done()
 }
 
-//--------- Scripts
+//--------- Script : javascript
 function coreScripts(source, dist) {
 
 	const isDev = dist === paths.scripts.dist.app
 
-	src(source)
+	return src(source)
 		.pipe(plumber())
 		.pipe(gulpif(isDev, esLint()))
 		.pipe(esLint.format('table'))
@@ -96,11 +97,7 @@ function coreScripts(source, dist) {
 			'presets': ['@babel/preset-env'],
 			'sourceType': 'script'
 		}))
-		.pipe(gulpif(isDev, concat('cookie.js')))
-		.pipe(rename({
-			basename: 'cookie',
-			suffix: '.min'
-		}))
+		.pipe(concat('cookie.min.js'))
 		.pipe(lec({
 			eolc: 'CRLF'
 		}))
@@ -119,27 +116,21 @@ function scripts(done) {
 //--------- Compile Sass
 function coreStyles(basename, source, dist, prod) {
 
-	src(source)
+	return src(source) //paths.styles.vendor
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
 		.pipe(sass({
-			outputStyle: 'expanded',
+			outputStyle: 'expanded', //nested, expanded, compact, compressed
 		}).on('error', sass.logError))
-		.pipe(cleanCSS()) 
-		.pipe(postCSS([
-			gap(),
+		.pipe(cleanCSS()) //minify
+		.pipe(postCSS([gap(),
 			cssVars({
 				preserve: true
-			}), 
-			autoprefixer({
+			}), autoprefixer({
 				grid: 'autoplace'
 			})
 		]))
-		.pipe(concat(`${basename}.css`))
-		.pipe(rename({
-			basename: basename,
-			suffix: '.min'
-		}))
+		.pipe(concat(`${basename}.min.css`))
 		.pipe(lec({
 			eolc: 'CRLF'
 		}))
@@ -150,6 +141,7 @@ function coreStyles(basename, source, dist, prod) {
 
 function styles(done) {
 
+	//styles DIST
 	coreStyles(
 		'cookie',
 		paths.styles.app.src,
@@ -159,13 +151,12 @@ function styles(done) {
 	done()
 }
 
-function sassLinter(done) {
-	src(paths.styles.app.watch)
+function sassLinter() {
+	return src(paths.styles.app.watch)
 		.pipe(plumber())
 		.pipe(sassLint())
 		.pipe(sassLint.format())
 		.pipe(sassLint.failOnError())
-	done()
 }
 
 //--------- Browser sync - local Server
@@ -180,11 +171,10 @@ function localServer(done) {
 				}
 			}
 		},
-		reloadDelay: 5000,
 		port: 9000,
 		ui: false,
 		notify: false,
-		open: false, 
+		open: false, //disable opening browser after running gulp
 		server: 'dist'
 	})
 	done()
@@ -200,12 +190,13 @@ function reload(done) {
 function watchAssets(done) {
 	watch(paths.styles.app.watch, series(styles, sassLinter, reload))
 	watch(paths.scripts.app.watch, series(scripts, reload))
-	watch(paths.views.app.watch, series(viewsPug, reload)) 
+	watch(paths.views.app.watch, series(viewsPug, reload))
 	done()
 }
 
+
 //--------- Create tasks
-const dev = series(clean, parallel(styles, scripts, viewsPug), sassLinter)
+const dev = series(clean, styles, scripts, viewsPug, sassLinter)
 
 exports.build = dev
-exports.default = series(dev, localServer, watchAssets)
+exports.default = series(localServer, watchAssets)

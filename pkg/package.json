@@ -1,21 +1,24 @@
 {
 	"name": "@feveragency/fever-cookies-plugin",
-	"version": "1.5.1",
+	"version": "2.1.0",
 	"description": "This plugin allows you to setup a fully customizable cookie bar, so the user can control which cookies want, following the best practices of GDPR compliance.",
+	"author": "Fever Agency",
+	"homepage": "fever.pt",
+	"email": "it@fever.pt",
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/FeverAgency/fever-cookies-plugin"
+	},
 	"keywords": [
 		"GDPR",
 		"cookies",
 		"cookie consent",
 		"cookiebar",
 		"data protection",
-		"privacy"
+		"privacy",
+		"cookieless"
 	],
-	"author": "Fever Agency",
-	"license": "ISC",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/FeverAgency/fever-cookies-plugin"
-	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"
 	}

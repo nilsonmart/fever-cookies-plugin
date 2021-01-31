@@ -1,4 +1,41 @@
-/* eslint-disable no-undef, no-unused-vars */
+/* eslint-disable no-undef */
+
+/*math.imul polyfill IE11*/ 
+if (!Math.imul) Math.imul = function(opA, opB) {
+	opB |= 0 // ensure that opB is an integer. opA will automatically be coerced.
+	// floating points give us 53 bits of precision to work with plus 1 sign bit
+	// automatically handled for our convienence:
+	// 1. 0x003fffff /*opA & 0x000fffff*/ * 0x7fffffff /*opB*/ = 0x1fffff7fc00001
+	//    0x1fffff7fc00001 < Number.MAX_SAFE_INTEGER /*0x1fffffffffffff*/
+	let result = (opA & 0x003fffff) * opB
+	// 2. We can remove an integer coersion from the statement above because:
+	//    0x1fffff7fc00001 + 0xffc00000 = 0x1fffffff800001
+	//    0x1fffffff800001 < Number.MAX_SAFE_INTEGER /*0x1fffffffffffff*/
+	if (opA & 0xffc00000 /*!== 0*/) result += (opA & 0xffc00000) * opB |0
+	return result |0
+}
+
+/* generate clientId hashed */
+const cyrb53 = (str, seed = 0) => {
+	let h1 = 0xdeadbeef ^ seed,
+		h2 = 0x41c6ce57 ^ seed
+	
+	for (let i = 0, ch; i < str.length; i++) {
+		ch = str.charCodeAt(i)
+		h1 = Math.imul(h1 ^ ch, 2654435761)
+		h2 = Math.imul(h2 ^ ch, 1597334677)
+	}
+	
+	h1 = Math.imul(h1 ^ h1 >>> 16, 2246822507) ^ Math.imul(h2 ^ h2 >>> 13, 3266489909)
+	h2 = Math.imul(h2 ^ h2 >>> 16, 2246822507) ^ Math.imul(h1 ^ h1 >>> 13, 3266489909)
+	
+	return 4294967296 * (2097151 & h2) + (h1 >>> 0)
+}
+
+const clientIP = '127.0.0.1', // replace to user's IP
+	validityInterval = Math.round(new Date() / 1000 / 3600 / 24 / 4),
+	clientIDSource = `${clientIP};${window.location.host};${navigator.userAgent};${navigator.language};${validityInterval}`,
+	clientIDHashed = cyrb53(clientIDSource).toString(16)
 
 //initialize plugin with default options
 // const myFeverCookieBar = new FeverCookieBar()
@@ -23,6 +60,7 @@ const myFeverCookieBarWithOptions = new FeverCookieBar({
 			},
 			labels: {
 				acceptAll: 'Accept all cookies',
+				rejectAll: 'I reject',
 				settings: 'Cookie Settings'
 			}
 		}
@@ -59,7 +97,17 @@ const myFeverCookieBarWithOptions = new FeverCookieBar({
 				text: 'These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.',
 				events: {
 					on() {
+						console.log('analytics on')
+					},
 
+					off() {
+						console.log('analytics off')
+						myFeverCookieBarWithOptions.expireCookie('_ga')
+						myFeverCookieBarWithOptions.expireCookie('_gid')
+						myFeverCookieBarWithOptions.expireCookie('_gat')
+					},
+
+					pageLoadOn() {
 						(function (i, s, o, g, r, a, m) {
 							i['GoogleAnalyticsObject'] = r
 							i[r] = i[r] || function () {
@@ -71,15 +119,34 @@ const myFeverCookieBarWithOptions = new FeverCookieBar({
 							a.src = g
 							m.parentNode.insertBefore(a, m)
 						})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga')
-						ga('create', 'UA-12345', 'auto')
+
+						ga('create', 'UA-12345', {'clientId': clientIDHashed})
 						ga('set', 'anonymizeIp', true)
 						ga('set', 'forceSSL', true)
 						ga('send', 'pageview')
+
+						console.log('analytics pageLoadOn')
 					},
-					off() {
-						myFeverCookieBarWithOptions.expireCookie('_ga')
-						myFeverCookieBarWithOptions.expireCookie('_gid')
-						myFeverCookieBarWithOptions.expireCookie('_gat')
+
+					pageLoadOff() {						
+						(function (i, s, o, g, r, a, m) {
+							i['GoogleAnalyticsObject'] = r
+							i[r] = i[r] || function () {
+								(i[r].q = i[r].q || []).push(arguments)
+							}, i[r].l = 1 * new Date()
+							a = s.createElement(o)
+							m = s.getElementsByTagName(o)[0]
+							a.async = 1
+							a.src = g
+							m.parentNode.insertBefore(a, m)
+						})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga')
+
+						ga('create', 'UA-12345', {'storage': 'none',  'clientId': clientIDHashed})
+						ga('set', 'anonymizeIp', true)
+						ga('set', 'forceSSL', true)
+						ga('send', 'pageview')
+						
+						console.log('analytics pageLoadOff')
 					}
 				}
 			},
@@ -91,8 +158,17 @@ const myFeverCookieBarWithOptions = new FeverCookieBar({
 					on() {
 						console.log('functional on')
 					},
+
 					off() {
 						console.log('functional off')
+					},
+
+					pageLoadOn() {
+						console.log('functional pageLoadOn')
+					},
+
+					pageLoadOff() {
+						console.log('functional pageLoadOff')
 					}
 				}
 			},
@@ -104,8 +180,17 @@ const myFeverCookieBarWithOptions = new FeverCookieBar({
 					on() {
 						console.log('targetting on')
 					},
+
 					off() {
 						console.log('targetting off')
+					},
+					
+					pageLoadOn() {
+						console.log('targetting pageLoadOn')
+					},
+					
+					pageLoadOff() {
+						console.log('targetting pageLoadOff')
 					}
 				}
 			}]
@@ -113,6 +198,4 @@ const myFeverCookieBarWithOptions = new FeverCookieBar({
 	}
 })
 
-document.querySelector('.link').addEventListener('click', () => {
-	myFeverCookieBarWithOptions.openModal()
-})
+document.querySelector('.link').addEventListener('click', () => myFeverCookieBarWithOptions.openModal())
