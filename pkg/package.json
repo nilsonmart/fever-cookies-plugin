@@ -18,5 +18,8 @@
 		"data protection",
 		"privacy",
 		"cookieless"
-	]
+	],
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/feveragency"
+	}
 }
