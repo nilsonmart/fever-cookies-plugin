@@ -200,7 +200,7 @@
 			colorSecondary = options.layout.color.secondary.match(vars.hexaColor)
 
 		options.layout.bar.position === 'top' ? el.classList.add('fever-cookie__bar--top') : el.classList.add('fever-cookie__bar--bottom')
-		options.layout.bar.textColor === 'white' ? el.classList.add('fever-cookie__bar-text--white') : el.classList.add('fvr-cookie__bar-text--black')
+		options.layout.bar.textColor === 'white' ? el.classList.add('fever-cookie__bar-text--white') : el.classList.add('fever-cookie__bar-text--black')
 		el.style.backgroundColor = `#${colorSecondary}`
 
 		document.querySelectorAll('.fever-button:not(.fever-button--settings)').forEach(selector => selector.style.backgroundColor = `#${colorPrimary}`)

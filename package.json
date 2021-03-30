@@ -11,9 +11,9 @@
 		"url": "https://github.com/FeverAgency/fever-cookies-plugin"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.12.10",
-		"@babel/preset-env": "^7.12.11",
-		"autoprefixer": "^10.2.4",
+		"@babel/core": "^7.13.14",
+		"@babel/preset-env": "^7.13.12",
+		"autoprefixer": "^10.2.5",
 		"browser-sync": "^2.26.14",
 		"del": "^6.0.0",
 		"gulp": "^4.0.2",
@@ -34,7 +34,7 @@
 		"gulp-sourcemaps": "^3.0.0",
 		"gulp-uglify": "3.0.2",
 		"path": "^0.12.7",
-		"postcss": "^8.2.4",
+		"postcss": "^8.2.8",
 		"postcss-css-variables": "^0.17.0",
 		"postcss-gap-properties": "^2.0.0"
 	},
