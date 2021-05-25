@@ -34,7 +34,7 @@
 		"gulp-sourcemaps": "^3.0.0",
 		"gulp-uglify": "3.0.2",
 		"path": "^0.12.7",
-		"postcss": "^8.2.8",
+		"postcss": "^8.2.10",
 		"postcss-css-variables": "^0.17.0",
 		"postcss-gap-properties": "^2.0.0"
 	},
